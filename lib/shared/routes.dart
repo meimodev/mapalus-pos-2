@@ -1,67 +1,17 @@
-// import 'package:get/get.dart';
-// import 'package:palakat/app/modules/account/account_binding.dart';
-// import 'package:palakat/app/modules/account/account_screen.dart';
-// import 'package:palakat/app/modules/home/home_binding.dart';
-// import 'package:palakat/app/modules/home/home_screen.dart';
-// import 'package:palakat/app/modules/membership/membership_binding.dart';
-// import 'package:palakat/app/modules/membership/membership_screen.dart';
-// import 'package:palakat/app/modules/notification/notification_binding.dart';
-// import 'package:palakat/app/modules/notification/notification_screen.dart';
-// import 'package:palakat/app/modules/signing/signing_binding.dart';
-// import 'package:palakat/app/modules/signing/signing_screen.dart';
-// import 'package:palakat/app/modules/song_detail/song_detail_binding.dart';
-// import 'package:palakat/app/modules/song_detail/song_detail_screen.dart';
-//
-// class Routes {
-//   static const String home = '/';
-//   static const String signing = '/signing';
-//   static const String calendar = '/calendar';
-//   static const String anthem = '/songs';
-//   static const String account = '/account';
-//   static const String membership = '/membership';
-//   static const String songDetail = '/song-detail';
-//   static const String notification = '/notification';
-//
-//   static List<GetPage> getRoutes() {
-//     return [
-//       GetPage(
-//         name: signing,
-//         page: () => const SigningScreen(),
-//         binding: SigningBinding(),
-//         transition: Transition.fade,
-//       ),
-//       GetPage(
-//         name: home,
-//         page: () => const HomeScreen(),
-//         binding: HomeBinding(),
-//         transition: Transition.fade,
-//         maintainState: true,
-//         preventDuplicates: true,
-//       ),
-//       GetPage(
-//         name: account,
-//         page: () => const AccountScreen(),
-//         binding: AccountBinding(),
-//         transition: Transition.rightToLeft,
-//       ),
-//       GetPage(
-//         name: membership,
-//         page: () => const MembershipScreen(),
-//         binding: MembershipBinding(),
-//         transition: Transition.rightToLeftWithFade,
-//       ),
-//       GetPage(
-//         name: notification,
-//         page: () => const NotificationScreen(),
-//         binding: NotificationBinding(),
-//         transition: Transition.rightToLeft,
-//       ),
-//       GetPage(
-//         name: songDetail,
-//         page: () => const SongDetailScreen(),
-//         binding: SongDetailBinding(),
-//         transition: Transition.rightToLeftWithFade,
-//       ),
-//     ];
-//   }
-// }
+
+import 'package:flutter/material.dart';
+import 'package:mapalus_pos_2/app/modules/transaction/transaction_screen.dart';
+import 'package:mapalus_pos_2/app/widgets/bottom_nav_bar_screen.dart';
+
+class Routes {
+  static const String home = '/';
+  static const String transaction = '/transaction';
+
+  static  Map<String, Widget Function(BuildContext)> get getRoutes {
+    return {
+      home: (_) => const BottomNavBarScreen(),
+      transaction : (_) => const TransactionScreen(),
+    };
+
+  }
+}
