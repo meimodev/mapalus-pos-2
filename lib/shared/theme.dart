@@ -109,11 +109,11 @@
 //   static const Color textAccent = accent;
 // }
 //
-// class Insets {
-//   static const double small = 12.0;
-//   static const double medium = 24.0;
-//   static const double large = 39.0;
-// }
+class Insets {
+  static const double small = 12.0;
+  static const double medium = 24.0;
+  static const double large = 39.0;
+}
 //
 // class Radius {
 //   static const double small = 12.0;

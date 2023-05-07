@@ -1,7 +1,7 @@
 //
 // import 'package:jiffy/jiffy.dart';
 //
-// extension StringExtension on String {
+extension StringExtension on String {
 //   String cleanPhone({bool useCountryCode = false}) {
 //     trim();
 //     if (useCountryCode) {
@@ -38,19 +38,19 @@
 //     return capitalizedWords.join(' ');
 //   }
 //
-//   String get toInitials {
-//     List<String> names = split(" ");
-//     String initials = "";
-//     int numWords = 2;
-//
-//     if(numWords < names.length) {
-//       numWords = names.length;
-//     }
-//     for(var i = 0; i < numWords; i++){
-//       initials += names[i][0];
-//     }
-//     return initials;
-//   }
+  String get toInitials {
+    List<String> names = split(" ");
+    String initials = "";
+    int numWords = 2;
+
+    if(numWords < names.length) {
+      numWords = names.length;
+    }
+    for(var i = 0; i < numWords; i++){
+      initials += names[i][0];
+    }
+    return initials;
+  }
 //
 //   String toBIPRA({bool abbreviate = true}){
 //
@@ -153,4 +153,4 @@
 //
 //     return true;
 //   }
-// }
+}
