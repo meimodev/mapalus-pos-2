@@ -11,7 +11,7 @@ class BottomNavBarScreen extends StatefulWidget {
   State<BottomNavBarScreen> createState() => _BottomNavBarScreenState();
 }
 
-class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
+class _BottomNavBarScreenState extends State<BottomNavBarScreen>  {
   int currentPageIndex = 0;
 
   final List<Widget> screens = [
@@ -69,4 +69,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       ),
     );
   }
+
+
 }

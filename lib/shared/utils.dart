@@ -1,7 +1,45 @@
 //
 // import 'package:jiffy/jiffy.dart';
 //
+import 'package:intl/intl.dart';
+
+extension IntegerExtension on int {
+  static const String keyFree = 'gratis';
+
+   String formatNumberToCurrency({bool canBeFree = false}) {
+     int number = this;
+    if (number <= 0) {
+      number = 0;
+    }
+    if (number == 0 ) {
+      if (canBeFree) {
+
+        return keyFree;
+      }
+      return "";
+    }
+    var f = NumberFormat('#,###');
+    var s = "Rp. ${f.format(number)}".replaceAll(",", ".");
+    return s;
+  }
+}
+
 extension StringExtension on String {
+  static const String keyFree = 'gratis';
+
+  double formatCurrencyToNumber() {
+    String currencyNumber = this;
+    if (currencyNumber.toLowerCase() == keyFree) {
+      return 0;
+    }
+    if (currencyNumber == "-") {
+      return 0;
+    }
+    var string = currencyNumber.replaceAll("Rp. ", "");
+    var safe = string.replaceAll(".", "");
+    return double.parse(safe);
+  }
+
 //   String cleanPhone({bool useCountryCode = false}) {
 //     trim();
 //     if (useCountryCode) {

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:mapalus_pos_2/app/widgets/order_overview_item.dart';
 import 'package:mapalus_pos_2/app/widgets/screen_wrapper.dart';
 import 'package:mapalus_pos_2/shared/shared.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
-    return ScreenWrapper(
+    super.build(context);
+    return const ScreenWrapper(
       children: [
         _BuildCurrentStoreAndAccount(
           storeName: 'Jhon Laundry',
@@ -17,10 +25,10 @@ class HomeScreen extends StatelessWidget {
         SizedBox(height: Insets.medium),
         _BuildCurrentOverviewCard(
           currentRevenue: 'Rp. 999.000.000',
-          currentOrderCounts: [
-            999,
-            256,
-            2,
+          data: [
+            {'text': '50', 'value': 'Antrian'},
+            {'text': '10', 'value': 'Selesai hari ini'},
+            {'text': '20', 'value': 'Terlambat'},
           ],
         ),
         SizedBox(height: Insets.medium),
@@ -28,6 +36,9 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _BuildButtonRow extends StatelessWidget {
@@ -39,18 +50,21 @@ class _BuildButtonRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         _ButtonRowItem(
-          iconData: Icons.shopping_bag_outlined,
+          iconData: Icons.shopping_bag_rounded,
           text: 'Tambah Pesanan',
+          iconColor: Theme.of(context).colorScheme.primary,
           onPressed: () {},
         ),
         _ButtonRowItem(
-          iconData: Icons.abc,
+          iconData: Icons.add_business_rounded,
           text: 'Tambah Pengeluaran',
+          iconColor: Theme.of(context).colorScheme.primary,
           onPressed: () {},
         ),
         _ButtonRowItem(
-          iconData: Icons.accessibility_sharp,
+          iconData: Icons.receipt_rounded,
           text: 'Cari Pesanan',
+          iconColor: Theme.of(context).colorScheme.primary,
           onPressed: () {},
         ),
       ],
@@ -63,11 +77,13 @@ class _ButtonRowItem extends StatelessWidget {
     required this.iconData,
     required this.text,
     required this.onPressed,
+    this.iconColor,
   });
 
   final IconData iconData;
   final String text;
   final void Function() onPressed;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +99,7 @@ class _ButtonRowItem extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Icon(iconData),
+                child: Icon(iconData, color: iconColor),
               ),
               const SizedBox(height: Insets.small),
               Text(
@@ -148,88 +164,59 @@ class _BuildCurrentOverviewCard extends StatelessWidget {
   const _BuildCurrentOverviewCard({
     Key? key,
     required this.currentRevenue,
-    required this.currentOrderCounts,
+    required this.data,
   }) : super(key: key);
 
   final String currentRevenue;
-  final List<int> currentOrderCounts;
+  final List<Map<String, dynamic>> data;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      textStyle: const TextStyle(color: Colors.white),
-      child: Container(
+      clipBehavior: Clip.hardEdge,
+      borderRadius: BorderRadius.circular(Insets.small),
+      color: Theme.of(context).colorScheme.onSecondaryContainer,
+      child: Padding(
         padding: const EdgeInsets.all(Insets.medium),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Insets.small),
-          color: Colors.grey.shade800,
-        ),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Omzet Hari Ini",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
                 ),
-                Text(currentRevenue),
+                Text(
+                  currentRevenue,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
             const SizedBox(height: Insets.small),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             const SizedBox(height: Insets.small),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _OrderOverviewItem(
-                    text: currentOrderCounts[0].toString(), value: "Masuk"),
-                _OrderOverviewItem(
-                    text: currentOrderCounts[1].toString(), value: "Proses"),
-                _OrderOverviewItem(
-                    text: currentOrderCounts[2].toString(), value: "Selesai"),
+                for (int i = 0; i < data.length; i++)
+                  OrderOverviewItem(
+                    text: data[i]["text"],
+                    value: data[i]["value"],
+                    textColor: Colors.white,
+                    valueColor: Theme.of(context).colorScheme.primaryContainer,
+                  ),
               ],
-            )
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _OrderOverviewItem extends StatelessWidget {
-  const _OrderOverviewItem({
-    Key? key,
-    required this.text,
-    required this.value,
-  }) : super(key: key);
-
-  final String text;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        const SizedBox(
-          height: Insets.small * .5,
-        ),
-        Text(
-          value,
-          style: Theme.of(context)
-              .textTheme
-              .labelMedium
-              ?.copyWith(color: Colors.white),
-        ),
-      ],
     );
   }
 }
