@@ -1,19 +1,16 @@
-//
-// import 'package:jiffy/jiffy.dart';
-//
+import 'package:jiffy/jiffy.dart';
 import 'package:intl/intl.dart';
 
 extension IntegerExtension on int {
   static const String keyFree = 'gratis';
 
-   String formatNumberToCurrency({bool canBeFree = false}) {
-     int number = this;
+  String formatNumberToCurrency({bool canBeFree = false}) {
+    int number = this;
     if (number <= 0) {
       number = 0;
     }
-    if (number == 0 ) {
+    if (number == 0) {
       if (canBeFree) {
-
         return keyFree;
       }
       return "";
@@ -81,14 +78,16 @@ extension StringExtension on String {
     String initials = "";
     int numWords = 2;
 
-    if(numWords < names.length) {
+    if (numWords < names.length) {
       numWords = names.length;
     }
-    for(var i = 0; i < numWords; i++){
+    for (var i = 0; i < numWords; i++) {
       initials += names[i][0];
     }
     return initials;
   }
+}
+
 //
 //   String toBIPRA({bool abbreviate = true}){
 //
@@ -141,41 +140,71 @@ extension StringExtension on String {
 //   }
 // }
 //
-// extension DateTimeExtension on DateTime {
-//   String get toDayEEEE {
-//     return Jiffy(this).format("EEEE");
-//   }
-//
-//   String get toMonthM {
-//     return Jiffy(this).format("M");
-//   }
-//
-//   String get toMonthMMM {
-//     return Jiffy(this).format("MMM");
-//   }
-//   String get toMonthMMMM {
-//     return Jiffy(this).format("MMMM");
-//   }
-//
-//   String get toTimeHHmm {
-//     return Jiffy(this).format("HH:mm");
-//   }
-//
-//   String get toYeary {
-//     return Jiffy(this).format("y");
-//   }
-//
-//   String get toDated {
-//     return Jiffy(this).format("d");
-//   }
-//   String format(String format){
-//     return Jiffy(this).format(format);
-//   }
-//
-//   DateTime resetTimeToStartOfTheDay(){
-//     return Jiffy(this).startOf(Units.DAY).dateTime;
-//   }
-// }
+
+extension DateTimeExtension on DateTime {
+  String get toDayEEEE {
+    return Jiffy.parseFromDateTime(this).format(pattern: "EEEE");
+  }
+
+  String get toMonthM {
+    return Jiffy.parseFromDateTime(this).format(pattern: "M");
+  }
+
+  String get toMonthMMM {
+    return Jiffy.parseFromDateTime(this).format(pattern: "MMM");
+  }
+
+  String get toMonthMMMM {
+    return Jiffy.parseFromDateTime(this).format(pattern: "MMMM");
+  }
+
+  String get toTimeHHmm {
+    return Jiffy.parseFromDateTime(this).format(pattern: "HH:mm");
+  }
+
+  String get toYeary {
+    return Jiffy.parseFromDateTime(this).format(pattern: "y");
+  }
+
+  String get toDated {
+    return Jiffy.parseFromDateTime(this).format(pattern: "d");
+  }
+
+  String format(String format) {
+    return Jiffy.parseFromDateTime(this).format(pattern: format);
+  }
+
+  DateTime resetTimeToStartOfTheDay() {
+    return Jiffy.parseFromDateTime(this).startOf(Unit.day).dateTime;
+  }
+
+  String fromNowHumanReadable() {
+    final now = Jiffy.now();
+    final comparison = Jiffy.parseFromDateTime(this);
+
+    if (comparison.diff(now, unit: Unit.minute) < 60 &&
+        comparison.diff(now, unit: Unit.minute) > 15) {
+      return "±1 jam lagi";
+    }
+    if (comparison.diff(now, unit: Unit.minute) <= 15 &&
+        comparison.diff(now, unit: Unit.minute) > -15) {
+      return "Saat ini";
+    }
+    if (comparison.diff(now, unit: Unit.minute) >= -15 &&
+        comparison.diff(now, unit: Unit.minute) < -60) {
+      return "±1 jam lalu";
+    }
+    String result = Jiffy.parseFromDateTime(this).fromNow();
+    if (result.contains("yang")) {
+      result = result.replaceAll("yang ", '');
+    }
+    if (result.contains("dalam")) {
+      result = "${result.replaceAll("dalam ", "")} lagi";
+    }
+
+    return result;
+  }
+}
 //
 // extension ListExtension on List<String>{
 //   bool equal(List<String> otherList) {
@@ -191,4 +220,3 @@ extension StringExtension on String {
 //
 //     return true;
 //   }
-}
