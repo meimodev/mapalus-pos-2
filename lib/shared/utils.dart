@@ -1,5 +1,6 @@
 import 'package:jiffy/jiffy.dart';
 import 'package:intl/intl.dart';
+import 'package:mapalus_pos_2/app/widgets/time_span_picker.dart';
 
 extension IntegerExtension on int {
   static const String keyFree = 'gratis';
@@ -174,8 +175,27 @@ extension DateTimeExtension on DateTime {
     return Jiffy.parseFromDateTime(this).format(pattern: format);
   }
 
-  DateTime resetTimeToStartOfTheDay() {
-    return Jiffy.parseFromDateTime(this).startOf(Unit.day).dateTime;
+
+  DateTime resetTimeOfTheDay({bool start = true}) {
+    final j = Jiffy.parseFromDateTime(this);
+    return start ? j.startOf(Unit.day).dateTime : j.endOf(Unit.day).dateTime;
+  }
+
+  DateTime resetTimeOfTheWeek({bool start = true}) {
+    final j = Jiffy.parseFromDateTime(this);
+    return start ? j.startOf(Unit.week).dateTime : j.endOf(Unit.week).dateTime;
+  }
+
+  DateTime resetTimeOfTheMonth({bool start = true}) {
+    final j = Jiffy.parseFromDateTime(this);
+    return start
+        ? j.startOf(Unit.month).dateTime
+        : j.endOf(Unit.month).dateTime;
+  }
+
+  DateTime resetTimeOfTheYear({bool start = true}) {
+    final j = Jiffy.parseFromDateTime(this);
+    return start ? j.startOf(Unit.year).dateTime : j.endOf(Unit.year).dateTime;
   }
 
   String fromNowHumanReadable() {
@@ -220,3 +240,24 @@ extension DateTimeExtension on DateTime {
 //
 //     return true;
 //   }
+
+extension EnumTranslatedName on Enum {
+  String get timeSpanSelectionTranslatedName {
+    if (runtimeType != TimeSpanPickerSelection) {
+      throw (Exception("TimeSpanPickerSelection enum only"));
+    }
+    final e = this as TimeSpanPickerSelection;
+    switch (e) {
+      case TimeSpanPickerSelection.thisDay:
+        return "Hari ini";
+      case TimeSpanPickerSelection.thisWeek:
+        return "Minggu ini";
+      case TimeSpanPickerSelection.thisMonth:
+        return "Bulan ini";
+      case TimeSpanPickerSelection.thisYear:
+        return "Tahun ini";
+      case TimeSpanPickerSelection.custom:
+        return "Pilih lingkup tanggal";
+    }
+  }
+}

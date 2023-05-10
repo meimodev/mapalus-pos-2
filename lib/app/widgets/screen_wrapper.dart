@@ -30,6 +30,7 @@ class ScreenWrapper extends StatelessWidget {
       child: disableParentScrolling
           ? widget
           : SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: widget,
             ),
     );
