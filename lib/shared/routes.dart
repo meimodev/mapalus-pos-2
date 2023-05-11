@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mapalus_pos_2/app/modules/home/expense/expense_screen.dart';
 import 'package:mapalus_pos_2/app/modules/order_detail/order_detail_screen.dart';
+import 'package:mapalus_pos_2/app/modules/product_detail/product_detail_screen.dart';
 import 'package:mapalus_pos_2/app/modules/report/report_order/report_order_screen.dart';
 import 'package:mapalus_pos_2/app/modules/report/report_transaction/report_transaction_screen.dart';
 import 'package:mapalus_pos_2/app/modules/setting/setting_account/setting_account_screen.dart';
@@ -30,10 +31,12 @@ class Routes {
   static const String settingMember = '/setting-member';
   static const String settingCrew = '/setting-crew';
 
+  static const String productDetail = '/product-detail';
+
   static Map<String, Widget Function(BuildContext)> get getRoutes {
     return {
       home: (_) => const BottomNavBarScreen(),
-      transaction: (_) => const TransactionScreen(),
+      transaction: (_) =>  TransactionScreen(),
       orderDetail: (_) => const OrderDetailScreen(),
       expense: (_) => const ExpenseScreen(),
       searchTransaction: (_) => const SearchTransactionScreen(),
@@ -45,6 +48,7 @@ class Routes {
       settingBranch: (_) => const SettingBranchScreen(),
       settingMember: (_) => const SettingMemberScreen(),
       settingCrew: (_) => const SettingCrewScreen(),
+      productDetail: (_) => const ProductDetailScreen(),
     };
   }
 }
