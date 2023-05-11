@@ -48,7 +48,7 @@ class _BuildOrderStatusTabBar extends StatelessWidget {
       Order(
         invoiceNumber: '1696',
         memberName: 'Some Jhon',
-        orderDate: DateTime.now().subtract(Duration(minutes: 20)),
+        orderDate: DateTime.now().subtract(const Duration(minutes: 20)),
         finishDate: DateTime.now(),
         totalWeight: 104.5,
         orderPrice: 1800000,

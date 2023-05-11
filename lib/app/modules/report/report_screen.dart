@@ -35,7 +35,7 @@ class ReportScreen extends StatelessWidget {
           },
         ),
         const SizedBox(height: Insets.small),
-        _BuildCurrentOverviewCard(
+        const _BuildCurrentOverviewCard(
           currentRevenue: 'Rp. 999.000.000',
           data: [
             {'text': 'Rp. 990.000.000', 'value': 'Masuk'},
@@ -47,7 +47,7 @@ class ReportScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: Insets.small),
-         _BuildSegmentListItem(
+         const _BuildSegmentListItem(
            dateTimeRangeFormatted: "Sen, 12 Feb 2023 - Min, 30 Mar 2023",
          ),
       ],

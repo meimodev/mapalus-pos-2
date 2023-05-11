@@ -53,19 +53,19 @@ class _BuildButtonRow extends StatelessWidget {
           iconData: Icons.shopping_bag_rounded,
           text: 'Tambah Pesanan',
           iconColor: Theme.of(context).colorScheme.primary,
-          onPressed: () {},
+          onPressed: () =>Navigator.pushNamed(context, Routes.transaction),
         ),
         _ButtonRowItem(
           iconData: Icons.add_business_rounded,
           text: 'Tambah Pengeluaran',
           iconColor: Theme.of(context).colorScheme.primary,
-          onPressed: () {},
+          onPressed: () =>Navigator.pushNamed(context, Routes.expense),
         ),
         _ButtonRowItem(
           iconData: Icons.receipt_rounded,
           text: 'Cari Pesanan',
           iconColor: Theme.of(context).colorScheme.primary,
-          onPressed: () {},
+          onPressed: () =>Navigator.pushNamed(context, Routes.searchTransaction),
         ),
       ],
     );

@@ -4,6 +4,7 @@ import 'package:mapalus_pos_2/app/modules/order/order_screen.dart';
 import 'package:mapalus_pos_2/app/modules/report/report_screen.dart';
 import 'package:mapalus_pos_2/app/modules/setting/setting_screen.dart';
 import 'package:mapalus_pos_2/shared/shared.dart';
+
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
 
@@ -11,7 +12,7 @@ class BottomNavBarScreen extends StatefulWidget {
   State<BottomNavBarScreen> createState() => _BottomNavBarScreenState();
 }
 
-class _BottomNavBarScreenState extends State<BottomNavBarScreen>  {
+class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int currentPageIndex = 0;
 
   final List<Widget> screens = [
@@ -32,25 +33,37 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen>  {
           });
         },
         selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
+        destinations: <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: Icon(
+              Icons.home_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.list_alt_outlined),
-            selectedIcon: Icon(Icons.list_alt),
+            icon: const Icon(Icons.assignment_outlined),
+            selectedIcon: Icon(
+              Icons.assignment_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             label: 'Order',
           ),
           NavigationDestination(
-            icon: Icon(Icons.bar_chart_outlined),
-            selectedIcon: Icon(Icons.bar_chart),
+            icon: const Icon(Icons.insert_chart_outlined_rounded),
+            selectedIcon: Icon(
+              Icons.insert_chart_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             label: 'Report',
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: Icon(
+              Icons.settings,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             label: 'Setting',
           ),
         ],
@@ -69,6 +82,4 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen>  {
       ),
     );
   }
-
-
 }

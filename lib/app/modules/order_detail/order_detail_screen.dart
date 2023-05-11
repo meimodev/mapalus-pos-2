@@ -6,7 +6,7 @@ class OrderDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenWrapper(
+    return const ScreenWrapper(
       children: [
         Text("Order Detail Screen"),
       ],
