@@ -14,3 +14,5 @@ class Product {
     return 'Product{name: $name, price: $price, stock: $stock}';
   }
 }
+
+

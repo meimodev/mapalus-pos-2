@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mapalus_pos_2/app/modules/home/expense/expense_screen.dart';
 import 'package:mapalus_pos_2/app/modules/order_detail/order_detail_screen.dart';
 import 'package:mapalus_pos_2/app/modules/product_detail/product_detail_screen.dart';
@@ -11,6 +11,7 @@ import 'package:mapalus_pos_2/app/modules/setting/setting_member/setting_printer
 import 'package:mapalus_pos_2/app/modules/setting/setting_printer/setting_printer_screen.dart';
 import 'package:mapalus_pos_2/app/modules/setting/setting_store/setting_store_screen.dart';
 import 'package:mapalus_pos_2/app/modules/transaction/search_transaction/search_transaction_screen.dart';
+import 'package:mapalus_pos_2/app/modules/transaction/transaction_binding.dart';
 import 'package:mapalus_pos_2/app/modules/transaction/transaction_screen.dart';
 import 'package:mapalus_pos_2/app/widgets/bottom_nav_bar_screen.dart';
 
@@ -33,22 +34,65 @@ class Routes {
 
   static const String productDetail = '/product-detail';
 
-  static Map<String, Widget Function(BuildContext)> get getRoutes {
-    return {
-      home: (_) => const BottomNavBarScreen(),
-      transaction: (_) =>  TransactionScreen(),
-      orderDetail: (_) => const OrderDetailScreen(),
-      expense: (_) => const ExpenseScreen(),
-      searchTransaction: (_) => const SearchTransactionScreen(),
-      reportTransaction: (_) => const ReportTransactionScreen(),
-      reportOrder: (_) => const ReportOrderScreen(),
-      settingStore: (_) => const SettingStoreScreen(),
-      settingAccount: (_) => const SettingAccountScreen(),
-      settingPrinter: (_) => const SettingPrinterScreen(),
-      settingBranch: (_) => const SettingBranchScreen(),
-      settingMember: (_) => const SettingMemberScreen(),
-      settingCrew: (_) => const SettingCrewScreen(),
-      productDetail: (_) => const ProductDetailScreen(),
-    };
+  static List<GetPage> get getRoutes {
+    return [
+      GetPage(
+        name: home,
+        page: () => const BottomNavBarScreen(),
+      ),
+      GetPage(
+        name: transaction,
+        page: () => TransactionScreen(),
+        binding: TransactionBindings(),
+      ),
+      GetPage(
+        name: orderDetail,
+        page: () => const OrderDetailScreen(),
+      ),
+      GetPage(
+        name: expense,
+        page: () => const ExpenseScreen(),
+      ),
+      GetPage(
+        name: searchTransaction,
+        page: () => const SearchTransactionScreen(),
+      ),
+      GetPage(
+        name: reportTransaction,
+        page: () => const ReportTransactionScreen(),
+      ),
+      GetPage(
+        name: reportOrder,
+        page: () => const ReportOrderScreen(),
+      ),
+      GetPage(
+        name: settingStore,
+        page: () => const SettingStoreScreen(),
+      ),
+      GetPage(
+        name: settingAccount,
+        page: () => const SettingAccountScreen(),
+      ),
+      GetPage(
+        name: settingPrinter,
+        page: () => const SettingPrinterScreen(),
+      ),
+      GetPage(
+        name: settingBranch,
+        page: () => const SettingBranchScreen(),
+      ),
+      GetPage(
+        name: settingMember,
+        page: () => const SettingMemberScreen(),
+      ),
+      GetPage(
+        name: settingCrew,
+        page: () => const SettingCrewScreen(),
+      ),
+      GetPage(
+        name: productDetail,
+        page: () => const ProductDetailScreen(),
+      ),
+    ];
   }
 }

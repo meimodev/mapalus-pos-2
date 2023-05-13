@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mapalus_pos_2/app/widgets/screen_wrapper.dart';
 import 'package:mapalus_pos_2/data/models/product.dart';
 import 'package:mapalus_pos_2/shared/shared.dart';
 
-class TransactionScreen extends StatelessWidget {
-  TransactionScreen({Key? key}) : super(key: key);
+import 'transaction_controller.dart';
 
-  final List<Product> products = [
-    Product(name: "Coffee Jhon", price: 4000),
-    Product(name: "Coffee Jhon", price: 4000),
-    Product(name: "Coffee Jhon", price: 4000, stock: 44),
-    Product(name: "Coffee Jhon", price: 4000),
-  ];
+class TransactionScreen extends GetView<TransactionController> {
+  const TransactionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,30 +16,34 @@ class TransactionScreen extends StatelessWidget {
       useScaffold: true,
       appBar: const CustomAppBar(),
       children: [
-        Text(
-          "Total produk (${products.length})",
-          textAlign: TextAlign.right,
+        Obx(
+          () => Text(
+            "Total produk (${controller.storeProducts.length})",
+            textAlign: TextAlign.right,
+          ),
         ),
         const SizedBox(height: Insets.small),
         Expanded(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(bottom: Insets.large),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              if (index == products.length - 1) {
-                return const _BuildAddProduct();
-              }
-              final p = products[index];
-              return CardProductItem(
-                onPressed: (_) {},
-                product: Product(
-                  name: p.name,
-                  price: p.price,
-                  stock: p.stock,
-                ),
-              );
-            },
+          child: Obx(
+            () => ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: Insets.large),
+              itemCount: controller.storeProducts.length,
+              itemBuilder: (context, index) {
+                if (index == controller.storeProducts.length - 1) {
+                  return const _BuildAddProduct();
+                }
+                final p = controller.storeProducts[index];
+                return CardProductItem(
+                  onPressed: (_) {},
+                  product: Product(
+                    name: p.name,
+                    price: p.price,
+                    stock: p.stock,
+                  ),
+                );
+              },
+            ),
           ),
         ),
         const _BuildOrderOverview(),
@@ -85,10 +85,10 @@ class _BuildAddProduct extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: Insets.small),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           "Tambah produk",
                         ),
@@ -119,16 +119,20 @@ class _BuildOrderOverview extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Rp. 999.000.000",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text("4 Product | 5 Unit",
-                  style: Theme.of(context).textTheme.labelMedium),
-            ],
+          Obx(
+            () {
+              return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Rp. 999.000.000",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text("4 Product | 5 Unit",
+                    style: Theme.of(context).textTheme.labelMedium),
+              ],
+            );
+            },
           ),
           FilledButton(
             onPressed: () {},
