@@ -11,103 +11,105 @@ class TransactionScreen extends GetView<TransactionController> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenWrapper(
-      disableParentScrolling: true,
-      useScaffold: true,
-      appBar: const CustomAppBar(),
-      children: [
-        Obx(
-          () => Text(
-            "Total produk (${controller.storeProducts.length})",
-            textAlign: TextAlign.right,
+    return Obx(
+      ()=> ScreenWrapper(
+        disableParentScrolling: true,
+        useScaffold: true,
+        appBar: const CustomAppBar(),
+        state: controller.loadingState.value,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _BuildAddProduct(
+                onPressed: controller.onPressedAddProduct,
+              ),
+              Obx(
+                () => Text(
+                  "Total produk (${controller.storeProducts.length})",
+                  textAlign: TextAlign.right,
+                ),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: Insets.small),
-        Expanded(
-          child: Obx(
-            () => ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(bottom: Insets.large),
-              itemCount: controller.storeProducts.length,
-              itemBuilder: (context, index) {
-                if (index == controller.storeProducts.length - 1) {
-                  return const _BuildAddProduct();
-                }
-                final p = controller.storeProducts[index];
-                return CardProductItem(
-                  onPressed: (_) {},
-                  product: Product(
-                    name: p.name,
-                    price: p.price,
-                    stock: p.stock,
-                  ),
-                );
-              },
+          const SizedBox(height: Insets.small),
+          Expanded(
+            child: Obx(
+              () => ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: Insets.large),
+                itemCount: controller.storeProducts.length,
+                itemBuilder: (context, index) {
+                  final p = controller.storeProducts[index];
+                  return CardProductItem(
+                    onPressed: (product) =>
+                        controller.onPressedProductCardItem(product),
+                    product: Product(
+                      name: p.name,
+                      price: p.price,
+                      stock: p.stock,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        const _BuildOrderOverview(),
-      ],
+          _BuildOrderOverview(
+            controller: controller, onPressed: controller.onPressedNext,
+          ),
+        ],
+      ),
     );
   }
 }
 
 class _BuildAddProduct extends StatelessWidget {
-  const _BuildAddProduct({Key? key}) : super(key: key);
+  const _BuildAddProduct({Key? key, required this.onPressed}) : super(key: key);
+
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Material(
-          clipBehavior: Clip.antiAlias,
-          shape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(
-              width: 1,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          child: InkWell(
-            onTap: () => Navigator.pushNamed(context, Routes.productDetail),
-            child: Padding(
-              padding: const EdgeInsets.all(Insets.small),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 30,
-                    child: Center(
-                      child: Icon(
-                        Icons.add,
-                        size: 20,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: Insets.small),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Tambah produk",
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+    return Material(
+      clipBehavior: Clip.antiAlias,
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          width: 1,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+      child: InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.all(Insets.small),
+          child: Row(
+            children: [
+              Center(
+                child: Icon(
+                  Icons.add,
+                  size: 20,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
+              const SizedBox(width: 6),
+              const Text(
+                "Tambah Produk",
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: Insets.small),
-      ],
+      ),
     );
   }
 }
 
 class _BuildOrderOverview extends StatelessWidget {
-  const _BuildOrderOverview({Key? key}) : super(key: key);
+  const _BuildOrderOverview({Key? key, required this.controller, required this.onPressed})
+      : super(key: key);
+
+  final TransactionController controller;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -122,21 +124,21 @@ class _BuildOrderOverview extends StatelessWidget {
           Obx(
             () {
               return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Rp. 999.000.000",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text("4 Product | 5 Unit",
-                    style: Theme.of(context).textTheme.labelMedium),
-              ],
-            );
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.orderedProductsTotalPrice.value,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(controller.orderedProductsTotalCount.value,
+                      style: Theme.of(context).textTheme.labelMedium),
+                ],
+              );
             },
           ),
           FilledButton(
-            onPressed: () {},
-            child: Text("LANJUT"),
+            onPressed: onPressed,
+            child: const Text("Lanjut"),
           ),
         ],
       ),
